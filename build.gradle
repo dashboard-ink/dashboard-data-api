@@ -1,25 +1,45 @@
-plugins {
-    id 'java'
-    id 'groovy'
-    id 'application'
-    id "com.github.johnrengelman.shadow" version "6.1.0"
-    id 'org.jetbrains.kotlin.jvm' version '1.4.21'
-    id "org.jlleitschuh.gradle.ktlint" version '9.4.1'
-}
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "org.jlleitschuh.gradle:ktlint-gradle:10.1.0"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.21"
+        classpath "gradle.plugin.com.github.jengelman.gradle.plugins:shadow:7.0.0"
 
-mainClassName = 'dev.dovydasvenckus.dashboard.api.App'
-
-ext {
-    dropWizardVersion = '2.0.15'
-    testContainersVersion = '1.15.0'
+    }
 }
 
 repositories {
     mavenCentral()
 }
 
+apply plugin: "java"
+apply plugin: "groovy"
+apply plugin: "application"
+apply plugin: "org.jlleitschuh.gradle.ktlint"
+apply plugin: "org.jetbrains.kotlin.jvm"
+apply plugin: "com.github.johnrengelman.shadow"
+
+sourceCompatibility = '1.11'
+targetCompatibility = '1.8'
+
+mainClassName = 'dev.dovydasvenckus.dashboard.api.App'
+
+ext {
+    dropWizardVersion = '2.0.24'
+    testContainersVersion = '1.15.0'
+}
+
+shadowJar {
+    mergeServiceFiles()
+    mainClassName = 'dev.dovydasvenckus.dashboard.api.App'
+}
+
 dependencies {
     implementation "io.dropwizard:dropwizard-core:${dropWizardVersion}"
 
-    implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.12.0'
+    implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.12.4'
 }

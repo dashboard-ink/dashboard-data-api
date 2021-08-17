@@ -10,7 +10,7 @@ import io.dropwizard.setup.Environment
 
 class App : Application<AppConfiguration>() {
     override fun getName(): String {
-        return "web-automation-service"
+        return "dashboard-data-api"
     }
 
     override fun initialize(bootstrap: Bootstrap<AppConfiguration>) {
