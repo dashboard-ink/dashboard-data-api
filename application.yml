@@ -1,0 +1,10 @@
+server:
+  rootPath: /api/
+
+jerseyClient:
+  timeout: 1m
+  gzipEnabledForRequests: false
+  chunkedEncodingEnabled: false
+
+scraper:
+  url: <INSERT_SCRAPER_URL>
