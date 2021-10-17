@@ -2,10 +2,10 @@ package dev.dovydasvenckus.dashboard.api.data.provider.covid19
 
 import dev.dovydasvenckus.dashboard.api.data.provider.DataProvider
 import dev.dovydasvenckus.dashboard.api.data.provider.model.Data
-import dev.dovydasvenckus.dashboard.api.data.scrape.ScrapingService
-import dev.dovydasvenckus.dashboard.api.data.scrape.model.ScrapeRequest
-import dev.dovydasvenckus.dashboard.api.data.scrape.model.ScrapeResult
-import dev.dovydasvenckus.dashboard.api.data.scrape.model.ScrapeStep
+import dev.dovydasvenckus.scrapper.client.WebScrapperClient
+import dev.dovydasvenckus.scrapper.client.model.ScrapeRequest
+import dev.dovydasvenckus.scrapper.client.model.ScrapeResult
+import dev.dovydasvenckus.scrapper.client.model.ScrapeStep
 
 private object FieldSelectors {
     val DATE = ScrapeStep(fieldName = "date", selector = "#w-statistika-lietuvoje > div > h3")
@@ -25,10 +25,10 @@ private object FieldSelectors {
     )
 }
 
-class Covid19DataProvider(private val scrapingService: ScrapingService) : DataProvider {
+class Covid19DataProvider(private val scrapingClient: WebScrapperClient) : DataProvider {
 
     override fun provide(): Data {
-        val result = scrapingService.scrape(
+        val result = scrapingClient.scrape(
             ScrapeRequest(
                 url = "https://koronastop.lrv.lt/",
                 steps = listOf(
