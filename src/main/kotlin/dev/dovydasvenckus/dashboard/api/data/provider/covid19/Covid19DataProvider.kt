@@ -51,8 +51,4 @@ class Covid19DataProvider(private val scrapingClient: WebScrapperClient) : DataP
         newCasesPer100K = getFieldValue(result, FieldSelectors.NEW_CASES_PER_100K.fieldName),
         percentageOfPositiveTests = getFieldValue(result, FieldSelectors.PERCENTAGE_OF_POSITIVE_TESTS.fieldName)
     )
-
-    private fun getFieldValue(scrapedFields: ScrapeResult, fieldName: String): String? {
-        return scrapedFields.data.find { field -> field.name == fieldName }?.value
-    }
 }

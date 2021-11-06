@@ -41,6 +41,6 @@ shadowJar {
 
 dependencies {
     implementation "io.dropwizard:dropwizard-core:${dropWizardVersion}"
-    implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.12.4'
-    implementation 'dev.dovydasvenckus:web-scrapper-java-client:0.0.1'
+    implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.13.0'
+    implementation 'dev.dovydasvenckus:web-scrapper-java-client:0.0.2'
 }

@@ -3,6 +3,7 @@ package dev.dovydasvenckus.dashboard.api
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import dev.dovydasvenckus.dashboard.api.data.DataResource
 import dev.dovydasvenckus.dashboard.api.data.provider.covid19.Covid19DataProvider
+import dev.dovydasvenckus.dashboard.api.data.provider.weather.OutdoorWeatherProvider
 import dev.dovydasvenckus.scrapper.client.WebScrapperClient
 import io.dropwizard.Application
 import io.dropwizard.configuration.EnvironmentVariableSubstitutor
@@ -24,10 +25,12 @@ class App : Application<AppConfiguration>() {
     }
 
     override fun run(configuration: AppConfiguration, environment: Environment) {
+        val scrapingClient = WebScrapperClient(configuration.scraperConfig.url)
         environment.jersey().register(
             DataResource(
                 listOf(
-                    Covid19DataProvider(WebScrapperClient(configuration.scraperConfig.url))
+                    Covid19DataProvider(scrapingClient),
+                    OutdoorWeatherProvider(scrapingClient)
                 )
             )
         )
