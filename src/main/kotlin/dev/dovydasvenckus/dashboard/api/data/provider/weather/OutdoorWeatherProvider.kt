@@ -7,23 +7,28 @@ import dev.dovydasvenckus.scrapper.client.model.ScrapeRequest
 import dev.dovydasvenckus.scrapper.client.model.ScrapeResult
 import dev.dovydasvenckus.scrapper.client.model.ScrapeStep
 import dev.dovydasvenckus.scrapper.client.model.StepType
+import dev.dovydasvenckus.scrapper.client.model.StepType.SCRAPE_TEXT
 
 private object FieldSelectors {
-    val CITY = ScrapeStep(fieldName = "city", selector = "tr.town_list > td.town:eq(0)")
+    val CITY = ScrapeStep(SCRAPE_TEXT, "city", null, "tr.town_list > td.town:eq(0)")
     val DESCRIPTION =
         ScrapeStep(
-            fieldName = "description",
-            type = StepType.SCRAPE_ATTRIBUTE,
-            attributeName = "title",
-            selector = "table.weather_block > tbody > tr:nth-child(2) > td:nth-child(2) > span:nth-child(1)"
+            StepType.SCRAPE_ATTRIBUTE,
+            "description",
+            "title",
+            "table.weather_block > tbody > tr:nth-child(2) > td:nth-child(2) > span:nth-child(1)"
         )
     val TEMPERATURE = ScrapeStep(
-        fieldName = "temperature",
-        selector = "table.weather_block > tbody > tr:nth-child(2) > td:nth-child(2) > span:nth-child(2)"
+        SCRAPE_TEXT,
+        "temperature",
+        null,
+        "table.weather_block > tbody > tr:nth-child(2) > td:nth-child(2) > span:nth-child(2)"
     )
     val WIND = ScrapeStep(
-        fieldName = "newCasesPer100K",
-        selector = "table.weather_block > tbody > tr:nth-child(2) > td:nth-child(2) > span:nth-child(3)"
+        SCRAPE_TEXT,
+        "newCasesPer100K",
+        null,
+        "table.weather_block > tbody > tr:nth-child(2) > td:nth-child(2) > span:nth-child(3)"
     )
 }
 
@@ -31,8 +36,8 @@ class OutdoorWeatherProvider(private val scrapingClient: WebScrapperClient) : Da
     override fun provide(): Data {
         val result = scrapingClient.scrape(
             ScrapeRequest(
-                url = "http://www.meteo.lt/lt/",
-                steps = listOf(
+                "http://www.meteo.lt/lt/",
+                listOf(
                     FieldSelectors.CITY,
                     FieldSelectors.DESCRIPTION,
                     FieldSelectors.TEMPERATURE,

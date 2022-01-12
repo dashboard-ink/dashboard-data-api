@@ -17,7 +17,7 @@ class App : Application<AppConfiguration>() {
     }
 
     override fun initialize(bootstrap: Bootstrap<AppConfiguration>) {
-        bootstrap.objectMapper.registerModule(KotlinModule())
+        bootstrap.objectMapper.registerModule(KotlinModule.Builder().build())
         bootstrap.configurationSourceProvider = SubstitutingSourceProvider(
             bootstrap.configurationSourceProvider,
             EnvironmentVariableSubstitutor(false)

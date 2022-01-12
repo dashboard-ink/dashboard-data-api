@@ -8,5 +8,4 @@ data class CovidData(
     val yesterdayCases: String?,
     val yesterdayDeaths: String?,
     val newCasesPer100K: String?,
-    val percentageOfPositiveTests: String?
 ) : Data(DataType.LOCAL_COVID19_STATISTICS)
