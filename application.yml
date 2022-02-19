@@ -3,4 +3,4 @@ server:
 
 
 scraper:
-  url: <INSERT_SCRAPER_URL>
+  url: ${WEB_SCRAPER_URI}
