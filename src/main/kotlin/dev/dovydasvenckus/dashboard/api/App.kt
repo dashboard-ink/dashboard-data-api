@@ -1,8 +1,11 @@
 package dev.dovydasvenckus.dashboard.api
 
+import java.net.http.HttpClient
 import com.fasterxml.jackson.module.kotlin.KotlinModule
+import com.google.gson.Gson
 import dev.dovydasvenckus.dashboard.api.data.DataResource
 import dev.dovydasvenckus.dashboard.api.data.provider.covid19.Covid19DataProvider
+import dev.dovydasvenckus.dashboard.api.data.provider.trello.TrelloDataProvider
 import dev.dovydasvenckus.dashboard.api.data.provider.weather.OutdoorWeatherProvider
 import dev.dovydasvenckus.scrapper.client.WebScrapperClient
 import io.dropwizard.Application
@@ -19,18 +22,26 @@ class App : Application<AppConfiguration>() {
     override fun initialize(bootstrap: Bootstrap<AppConfiguration>) {
         bootstrap.objectMapper.registerModule(KotlinModule.Builder().build())
         bootstrap.configurationSourceProvider = SubstitutingSourceProvider(
-            bootstrap.configurationSourceProvider,
-            EnvironmentVariableSubstitutor(false)
+            bootstrap.configurationSourceProvider, EnvironmentVariableSubstitutor(false)
         )
     }
 
     override fun run(configuration: AppConfiguration, environment: Environment) {
         val scrapingClient = WebScrapperClient(configuration.scraperConfig.url)
+
         environment.jersey().register(
             DataResource(
                 listOf(
                     Covid19DataProvider(scrapingClient),
-                    OutdoorWeatherProvider(scrapingClient)
+                    OutdoorWeatherProvider(scrapingClient),
+                    TrelloDataProvider(
+                        client = HttpClient.newBuilder().build(),
+                        gson = Gson(),
+                        baseUrl = configuration.trelloConfig.baseUrl,
+                        appKey = configuration.trelloConfig.appKey,
+                        userToken = configuration.trelloConfig.userToken,
+                        listId = configuration.trelloConfig.listId
+                    )
                 )
             )
         )

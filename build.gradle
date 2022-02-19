@@ -43,4 +43,5 @@ dependencies {
     implementation "io.dropwizard:dropwizard-core:${dropWizardVersion}"
     implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.13.1'
     implementation 'dev.dovydasvenckus:web-scrapper-java-client:0.0.4'
+    implementation 'com.google.code.gson:gson:2.8.9'
 }

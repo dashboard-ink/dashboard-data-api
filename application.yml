@@ -4,3 +4,9 @@ server:
 
 scraper:
   url: ${WEB_SCRAPER_URI}
+
+trello:
+  baseUrl: https://api.trello.com/1
+  appKey: ${TRELLO_APP_KEY}
+  userToken: ${TRELLO_USER_TOKEN}
+  listId: ${TRELLO_LIST_ID}
