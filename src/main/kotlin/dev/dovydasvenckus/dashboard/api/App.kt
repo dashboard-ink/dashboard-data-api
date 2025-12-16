@@ -4,7 +4,6 @@ import java.net.http.HttpClient
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.google.gson.Gson
 import dev.dovydasvenckus.dashboard.api.data.DataResource
-import dev.dovydasvenckus.dashboard.api.data.provider.covid19.Covid19DataProvider
 import dev.dovydasvenckus.dashboard.api.data.provider.trello.TrelloDataProvider
 import dev.dovydasvenckus.dashboard.api.data.provider.weather.OutdoorWeatherProvider
 import dev.dovydasvenckus.scrapper.client.WebScrapperClient
@@ -32,7 +31,6 @@ class App : Application<AppConfiguration>() {
         environment.jersey().register(
             DataResource(
                 listOf(
-                    Covid19DataProvider(scrapingClient),
                     OutdoorWeatherProvider(scrapingClient),
                     TrelloDataProvider(
                         client = HttpClient.newBuilder().build(),
